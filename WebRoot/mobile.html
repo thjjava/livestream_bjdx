@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>视频录播系统</title>
+	<!-- ie使用最高版本,启用GCF -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+	<!-- 360启用急速模式 -->
+	<meta name="renderer" content="webkit">
+	<meta content="视频录播" name="keywords">
+	<style>
+		.info-holder {
+		    background: #f5f5f5 none repeat scroll 0 0;
+		    color: #838383;
+		    font-size: 12px;
+		    height: 33px;
+		    padding: 3px 10px 2px 0;
+		    position: relative;
+		    text-align: right;
+		}
+		.info-holder .icon-area {
+		    float: left;
+		    line-height: 20px;
+		    margin-top: 7px;
+		    min-width: 67px;
+		    position: relative;
+		    text-align: left;
+		    width: auto !important;
+		}
+		.info-holder .icon-area.good-area {
+		    background: rgba(0, 0, 0, 0) url("images/good-btn.png") no-repeat scroll 0 -101px;
+		    cursor: default;
+		    height: 23px;
+		    line-height: 23px;
+		    margin: 5px 0 0 141px;
+		}
+		.info-holder .icon-area.un-good {
+		    background: rgba(0, 0, 0, 0) url("images/good-btn.png") no-repeat scroll 0 -50px;
+		    cursor: pointer;
+		    height: 23px;
+		    line-height: 23px;
+		    margin: 5px 0 0 141px;
+		}
+		.info-holder .icon-area.fav-area {
+		    background: rgba(0, 0, 0, 0) url("images/good-btn.png") no-repeat scroll 0 0;
+		    cursor: pointer;
+		    height: 23px;
+		    line-height: 23px;
+		    margin-left: 5px;
+		    margin-top: 5px;
+		}
+		.info-holder .icon-area.icon-sta {
+		    background: rgba(0, 0, 0, 0) url("images/good-btn.png") no-repeat scroll 0 -149px;
+		}
+		.info-holder .icon-area.icon-fav {
+		    background: rgba(0, 0, 0, 0) url("images/good-btn.png") no-repeat scroll 0 0;
+		}
+		.info-holder .icon-area .icon {
+		    background: rgba(0, 0, 0, 0) url("images/white-icon.png") no-repeat scroll 0 11px;
+		    float: left;
+		    height: 20px;
+		    margin-right: 10px;
+		    width: 19px;
+		}
+		.info-holder .icon-area .icon.icon-visit {
+		    background-position: -16px -12px;
+		}
+		.info-holder .icon-area .icon.icon-say {
+		    background-position: -142px -12px;
+		    margin: 0 3px 0 7px;
+		}
+	</style>
+</head>
+
+<body style="background-color: #fff;">
+	<div style="width: 100%; height: auto;margin-bottom: 10px;text-align:center;">
+	<h3>即拍即传视频直播</h3>
+	<!-- <img src="images/M1_test11.jpg" /> -->
+	</div>
+	<video style="margin:-7px -10px 0 0;width: 100%;height: auto;" id="my-video" controls="controls" autoplay="autoplay" 
+		poster="images/default_230_130.png">
+		<!-- <source src="http://101.95.49.76:8080/WsMobile/plugin/M1_test11.mp4" type='video/mp4'> -->
+		<!-- <source src="${hlsUrl}" type='video/mp4'> -->
+	</video>
+	<style>
+		.bdsharebuttonbox a{
+			text-decoration: none;
+		}
+	</style>
+	<!--百度一键分享 图片大小bdSize:16/24/32-->
+	<div class="bdsharebuttonbox" style="padding-top:10px;">
+		<a href="#" class="bds_more" data-cmd="more">分享到:</a>
+		<a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a>
+		<a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a>
+		<a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a>
+		<a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a>
+		<a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a>
+		<a class="bds_count" data-cmd="count"></a>
+	</div>
+	<script>
+		window._bd_share_config = {
+			"common": {
+				"bdSnsKey": {},
+				"bdText": "",//分享的内容
+				"bdMini": "2",//下拉浮层中分享按钮的列数：1｜2｜3
+				"bdPic": "",//分享的图片
+				"bdStyle": "0",
+				"bdSize": "24"//图标大小:16/24/32
+			},
+			"share": {}
+		};
+		with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+	</script>
+	<!--百度一键分享-->
+	<!-- <div class="info-holder">
+		<div class="icon-area" style="margin-left: 20px;">
+			<span class="icon icon-visit"></span> 
+			<span class="visitNum" id="curVisit"></span>
+		</div>
+		<div class="icon-area un-good" id="sayGood">
+			<span class="icon icon-good"></span> 
+			<span class="goodNum" id="curGood"></span> 
+			<span class="tipGood" style="position: absolute; left: 4px; top: -1px; z-index: 9999; color: #4baef4; font-weight: bold; display: none;">+1</span>
+		</div>
+	</div> -->
+	<div style="width: 100%; min-height: 120px;margin-top:5px;border: 1px;word-break: break-all;">
+		<span style="line-height: 1.6;text-indent: 2em;word-break: break-all;"></span>
+	</div>
+	<!-- <div style="width: 100%; height: auto;margin-top:5px;border: 1px ;text-align:center;">
+		<p style="color: red;">
+			Come With Us~<br />
+			客服热线：400-920-8566<br />
+			地址：上海杨高南路5788号<br />
+			邮编：200122<br />
+			传真：021-68733629<br />
+			邮箱：spzx@sttri.com.cn
+		</p>
+		<img src="images/0.jpg" />
+	</div> -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript">
+		var id,hlsUrl,goodCount=0;
+		$(function(){
+        	var player = document.getElementById("my-video");
+        	/* if(player.play) {  
+				player.pause();
+			}else { 
+				player.play();
+			} */
+			var tmpArr, queryString;
+			var URL = document.location.toString(); //获取带参URL
+            if (URL.lastIndexOf("?") != -1) {
+            	queryString = URL.substring(URL.lastIndexOf("?") + 1, URL.length);
+                tmpArr = queryString.split("&");//分离参数
+                var ids = tmpArr[0].split("=");
+                id = ids[1];
+                var urls = tmpArr[1].split("=");
+                hlsUrl = urls[1];
+                player.src=decodeURIComponent(hlsUrl);
+            }
+            var hasGood=false;
+			/* $.ajax({
+	            url: "live_play.do",
+	            type: 'post',
+	            data: {id:id},
+	            success: function (data) {
+	            	var data = eval("("+data+")");
+	            	player.src=data.hlsUrl;
+	            	$("#curVisit").html(data.records);
+	            	hasGood = data.hasGood;
+	            	goodCount=data.goodCount;
+	            	$("#curGood").html(goodCount);
+	            	//判断用户在该IP下是否已经点过赞
+					if(hasGood){
+						$("#sayGood").removeClass("un-good").addClass("good-area").off("click");
+					}
+	            },
+	            error: function (data) {
+	                alert('操作失败，请检查网络连接！');
+	            }
+	         }); */
+			
+        });
+        
+        //万位以上数字转换
+	    function numTrans(int){
+	        var f = 0;
+	        if( int > 9999 ){
+	            f =(Math.round(int/10000*10)/10).toFixed(1)+'万'
+	        }else{
+	            f = int;
+	        }
+	        return f;
+	    }
+		
+		//点赞
+	    $("#sayGood").on("click", function () {
+	        var $this = $(this);
+	        $this.attr("disabled","disabled");
+	        $.ajax({
+	            url: "live_addLike.do",
+	            type: 'post',
+	            data: {videoId:id},
+	            success: function (data) {
+	            	var data = eval("("+data+")");
+	                var resultCode = data.retCode;
+	                $this.removeAttr("disabled");
+	                if (resultCode == 0) {
+	                    var $good = $('#curGood');
+	                    $('.tipGood').show();
+	                    $('.tipGood').animate({
+	                        'top': '-14',
+	                        'left': '8'
+	                    }, 600, function () {
+	                        $('.tipGood').fadeOut(function () {
+	                            $('.tipGood').css('top', '-14px');
+	                        });
+	                        var num = Number(goodCount);
+	                        if(num < 10000){
+	                            num++;
+	                            $good.text(numTrans(num));
+	                        }
+	                        $('#sayGood').removeClass('un-good').addClass('good-area').off('click');
+	                    });
+	                }else if(resultCode == 1){
+	                	alert("重复点赞");
+	                    $('#sayGood').removeClass('un-good').addClass('good-area').off('click');
+	                }else{
+	                	alert("点赞失败");
+	                	$this.removeAttr("disabled");
+	                }
+	            },
+	            error: function (data) {
+	                $this.removeAttr("disabled");
+	                alert('操作失败，请检查网络连接！');
+	            }
+	        });
+	    });
+	    
+	</script>
+</body>
+</html>

@@ -138,7 +138,7 @@ public class DevAction extends BaseAction {
 				dev.setOnLines(1);
 				dev.setIsAble(0);
 				dev.setAddTime(Util.dateToStr(new Date()));
-				dev.setDevKey(WorkUtil.pwdEncrypt(dev.getDevKey()));
+//				dev.setDevKey(WorkUtil.pwdEncrypt(dev.getDevKey()));
 				dev.setFullFlag(0);
 				dev.setLoginTimes(0);
 				devService.save(dev);

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class WorkUtil {
 	public static String pwdEncrypt(String pwd){
-		return Base64Util.encode(pwd);
+		return MD5Util.MD5Code(pwd);
 	}
 	
 	public static Map getCurrUser(HttpServletRequest request){

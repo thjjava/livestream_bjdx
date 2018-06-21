@@ -98,5 +98,11 @@
 			</result>
         </action>
         
+        <!-- 管理员日志管理 -->
+        <action name="userLog_*" class="com.sttri.action.UserLogAction" method="{1}">
+            <result name="success" type="json">
+				<param name="includeProperties"/>
+			</result>
+        </action>
     </package>
 </struts>

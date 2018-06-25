@@ -86,6 +86,7 @@ public class MediaServerAction extends BaseAction {
 			mediaServer.setPlayNum(0);
 			mediaServer.setOnLine(0);
 			mediaServerService.save(mediaServer);
+			saveUserLog("新增流媒体服务器："+mediaServer.getServerName());
 			PrintWriter pw = response.getWriter();
 			pw.print("success");
 			pw.flush();
@@ -106,6 +107,7 @@ public class MediaServerAction extends BaseAction {
 			mediaServer.setPlayNum(ms.getPlayNum());
 			mediaServer.setOnLine(ms.getOnLine());
 			mediaServerService.update(mediaServer);
+			saveUserLog("修改流媒体服务器信息:"+mediaServer.getServerName());
 			PrintWriter pw = response.getWriter();
 			pw.print("success");
 			pw.flush();
@@ -139,6 +141,11 @@ public class MediaServerAction extends BaseAction {
 		try {
 			String ids = Util.dealNull(request.getParameter("ids"));
 			if(!"".equals(ids) && null!=ids){
+				String[] array = ids.split("_");
+				for (int i = 0; i < array.length; i++) {
+					MediaServer server = this.mediaServerService.getById(array[i]);
+					saveUserLog("删除流媒体服务器:"+server.getServerName());
+				}
 				mediaServerService.deletebyids(ids.split("_"));
 				PrintWriter pw = response.getWriter();
 				pw.print("success");
@@ -168,6 +175,7 @@ public class MediaServerAction extends BaseAction {
 						int onLine = server.getOnLine()==0?1:0;//onLine=0 离线，=1在线 
 						server.setOnLine(onLine);
 						this.mediaServerService.update(server);
+						saveUserLog("设置流媒体服务器【"+server.getServerName()+"】的在线状态："+onLine+"(onLine=0 离线，(onLine=1在线 )");
 					}
 				}
 				pw.print("success");

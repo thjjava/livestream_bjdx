@@ -58,6 +58,7 @@
 									<option value="3">直播异常</option>
 									<option value="4">APP异常</option>
 									<option value="5">登录远程客户端</option>
+									<option value="6">录像上传</option>
 								</select>
 							</td>
 							<td bgcolor="#ffffff" align="center">

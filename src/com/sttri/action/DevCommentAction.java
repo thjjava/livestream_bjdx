@@ -108,6 +108,7 @@ public class DevCommentAction extends BaseAction {
 						int isLegal = devComment.getIsLegal()==0?1:0;//isLegal=0 合法，=1违规 
 						devComment.setIsLegal(isLegal);
 						this.devCommentService.update(devComment);
+						saveUserLog("审核评论是否合法");
 					}
 				}
 				pw.print("success");
@@ -144,6 +145,7 @@ public class DevCommentAction extends BaseAction {
 							black.setFlag(1);//flag是否可以移除黑名单 0-可以 1-不可以
 							black.setAddTime(Util.dateToStr(new Date()));
 							this.blackService.save(black);
+							saveUserLog("将违法评论的用户账号拉入黑名单："+user.getAccount());
 						}
 					}
 				}

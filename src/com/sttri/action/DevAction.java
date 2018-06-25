@@ -143,6 +143,7 @@ public class DevAction extends BaseAction {
 				dev.setLoginTimes(0);
 				devService.save(dev);
 				rt = "success";
+				saveUserLog("新增直播账号："+dev.getDevNo());
 			}else{
 				rt = "devnums";
 			}
@@ -186,7 +187,7 @@ public class DevAction extends BaseAction {
 			dev.setFullFlag(d.getFullFlag());
 			dev.setEditTime(Util.dateToStr(new Date()));
 			devService.update(dev);
-			
+			saveUserLog("修改直播账号："+devNo);
 			pw.print("success");
 			pw.flush();
 			pw.close();
@@ -218,6 +219,11 @@ public class DevAction extends BaseAction {
 		try {
 			String ids = Util.dealNull(request.getParameter("ids"));
 			if(!"".equals(ids) && null!=ids){
+				String[] array = ids.split("_");
+				for (int i = 0; i < array.length; i++) {
+					TblDev d = this.devService.getById(array[i]);
+					saveUserLog("删除直播账号："+d.getDevNo());
+				}
 				devService.deletebyids(ids.split("_"));
 				PrintWriter pw = response.getWriter();
 				pw.print("success");
@@ -242,6 +248,7 @@ public class DevAction extends BaseAction {
 				dev.setIsAble(isAble);
 				devService.update(dev);
 				obj.put("desc", "更新成功!");
+				saveUserLog("更新直播账号状态："+dev.getDevNo());
 			}else{
 				obj.put("desc", "当前设备在线!");
 			}
@@ -292,6 +299,7 @@ public class DevAction extends BaseAction {
 				tblDev.setCompany(company);
 				tblDev.setFullFlag(0);
 				this.devService.save(tblDev);
+				saveUserLog("批量新增直播账号："+devNo);
 			}
 			PrintWriter pw = response.getWriter();
 			pw.print("success");
@@ -319,6 +327,7 @@ public class DevAction extends BaseAction {
 						int isAble = dev.getIsAble()==0?1:0;//isAble=0 启用，=1禁用 
 						dev.setIsAble(isAble);
 						this.devService.update(dev);
+						saveUserLog("设置直播账号是否禁用："+dev.getDevNo());
 					}
 				}
 				pw.print("success");
@@ -370,6 +379,7 @@ public class DevAction extends BaseAction {
 									newDev.setCompany(company);
 									newDev.setFullFlag(0);
 									this.devService.save(newDev);
+									saveUserLog("批量导入直播账号："+dev.getDevNo());
 								}
 								key = "success";
 							}

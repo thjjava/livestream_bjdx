@@ -87,6 +87,10 @@ public class BlackAction extends BaseAction {
 			String ids = Util.dealNull(request.getParameter("ids"));
 			if(!"".equals(ids) && null!=ids){
 				String[] array = ids.split("_");
+				for (int i = 0; i < array.length; i++) {
+					TblBlack black = this.blackService.getById(array[i]);
+					saveUserLog("将用户【"+black.getUser().getAccount()+"】移除黑名单");
+				}
 				this.blackService.deletebyids(array);
 				PrintWriter pw = response.getWriter();
 				pw.print("success");

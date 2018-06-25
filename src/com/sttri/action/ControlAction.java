@@ -91,6 +91,7 @@ public class ControlAction extends BaseAction {
 			control.setId(Util.getUUID(6));
 			control.setAddTime(Util.dateToStr(new Date()));
 			controlService.save(control);
+			saveUserLog("新增客户端:"+control.getConName()+",版本号："+control.getConVer());
 			PrintWriter pw = response.getWriter();
 			pw.print("success");
 			pw.flush();
@@ -106,6 +107,7 @@ public class ControlAction extends BaseAction {
 		try {
 			control.setEditTime(Util.dateToStr(new Date()));
 			controlService.update(control);
+			saveUserLog("修改客户端:"+control.getConName()+"的版本号："+control.getConVer());
 			PrintWriter pw = response.getWriter();
 			pw.print("success");
 			pw.flush();
@@ -139,6 +141,11 @@ public class ControlAction extends BaseAction {
 		try {
 			String ids = Util.dealNull(request.getParameter("ids"));
 			if(!"".equals(ids) && null!=ids){
+				String[] array= ids.split("_");
+				for (int i = 0; i < array.length; i++) {
+					TblControl con = this.controlService.getById(array[i]);
+					saveUserLog("删除客户端："+con.getConName());
+				}
 				controlService.deletebyids(ids.split("_"));
 				PrintWriter pw = response.getWriter();
 				pw.print("success");

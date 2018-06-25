@@ -107,6 +107,7 @@ public class RoleAction extends BaseAction {
 				role.setAddTime(Util.dateToStr(new Date()));
 				this.roleService.save(role);
 				result = "success";
+				saveUserLog("新建角色："+role.getRoleName());
 			}
 			
 			PrintWriter pw = response.getWriter();
@@ -122,6 +123,7 @@ public class RoleAction extends BaseAction {
 		response.setCharacterEncoding("UTF-8");
 		try {
 			this.roleService.update(role);
+			saveUserLog("修改角色："+role.getRoleName());
 			PrintWriter pw = response.getWriter();
 			pw.print("success");
 			pw.flush();
@@ -169,6 +171,7 @@ public class RoleAction extends BaseAction {
 					List<RoleMenus> rMenus = this.roleMenusService.getResultList(" o.role.id=?", null, new Object[]{array[i]});
 					for (RoleMenus roleMenus : rMenus) {
 						this.roleMenusService.deletebyid(roleMenus.getId());
+						saveUserLog("删除角色："+roleMenus.getRole().getRoleName());
 					}
 				}
 				PrintWriter pw = response.getWriter();
@@ -207,6 +210,7 @@ public class RoleAction extends BaseAction {
 		String roleId = Util.dealNull(request.getParameter("roleId"));
 		String mIds = Util.dealNull(request.getParameter("menus"));
 		try {
+			String logDesc = "设置角色失败";
 			PrintWriter pw = response.getWriter();
 			List<RoleMenus> rmList = this.roleMenusService.getResultList(" o.role.id=?", null, new Object[]{roleId});
 			if (rmList != null && rmList.size() >0) {
@@ -225,9 +229,11 @@ public class RoleAction extends BaseAction {
 						roleMenus.setRole(role);
 						roleMenus.setMenus(menus);
 						this.roleMenusService.save(roleMenus);
+						logDesc = "设置角色："+role.getRoleName()+"的权限";
 					}
 				}
 			}
+			saveUserLog(logDesc);
 			pw.print("success");
 			pw.flush();
 			pw.close();

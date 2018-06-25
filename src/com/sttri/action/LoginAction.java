@@ -79,6 +79,7 @@ public class LoginAction extends BaseAction{
 				int dateDiff = (int)Util.datediff(hasErrorLoginTime, now, "yyyy-MM-dd HH:mm:ss");
 				if (dateDiff <= 10*60*1000 && hasErrorLogin >= ERRORTIMES) {
 					request.getSession().setAttribute("errorinfo", "登录失败的次数已达上限,请10分钟后再登录！");
+					saveUserLog(account+"登录失败的次数已达上限,请10分钟后再登录！");
 					return "login";
 				}
 			}
@@ -99,24 +100,29 @@ public class LoginAction extends BaseAction{
 					int lastLoginTimes = ERRORTIMES-hasErrorLogin;
 					request.getSession().setAttribute("hasErrorLogin", hasErrorLogin);
 					request.getSession().setAttribute("errorinfo", "密码不正确,剩余登录次数还有"+lastLoginTimes+"次！");
+					saveUserLog(account+"密码不正确,剩余登录次数还有"+lastLoginTimes+"次！");
 					return "login";
 				}
 			}else {
 				hasErrorLogin +=1;
 				request.getSession().setAttribute("hasErrorLogin", hasErrorLogin);
 				request.getSession().setAttribute("errorinfo", "登录失败的次数已达上限,请10分钟后再登录！");
+				saveUserLog(account+"登录失败的次数已达上限,请10分钟后再登录！");
 				return "login";
 			}
 		}else{
 			request.setAttribute("errorinfo", "用户名不存在！");
 			return "login";
 		}
+		
+		saveUserLog(account+"登录成功！");
 		return "index";
 	}
 	
 	
 	public String logout(){
 		request.getSession().removeAttribute("Account");
+		saveUserLog(Constant.readKey("admin")+"退出登录");
 		return "logout";
 	}
 

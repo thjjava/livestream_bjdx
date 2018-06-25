@@ -16,6 +16,7 @@ import com.sttri.bean.QueryJSON;
 import com.sttri.bean.QueryResult;
 import com.sttri.pojo.UserLog;
 import com.sttri.service.IUserLogService;
+import com.sttri.util.ExcelUtil;
 import com.sttri.util.Util;
 
 
@@ -68,7 +69,7 @@ public class UserLogAction extends BaseAction {
 			map.put("logDesc", "日志内容");
 			map.put("addTime", "时间");
 			response.setContentType("application/x-download");
-        	com.sttri.util.ExcelUtil.ImportExcel(list, response.getOutputStream(), map, "设备日志");
+			ExcelUtil.ImportExcel(list, response.getOutputStream(), map, "设备日志");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

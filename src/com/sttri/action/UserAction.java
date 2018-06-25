@@ -97,7 +97,7 @@ public class UserAction extends BaseAction {
 	public void save(){
 		response.setCharacterEncoding("UTF-8");
 		try {
-			String result = "";
+			String result = "",logDesc="新建观看端用户账号";
 			List<TblUser> list = userService.getResultList("o.account=?", null, user.getAccount());
 			if(list!=null && list.size()>0){
 				result = "account";
@@ -116,11 +116,13 @@ public class UserAction extends BaseAction {
 					return ;
 				}
 				user.setPwd(WorkUtil.pwdEncrypt(pwd));
+				logDesc="新建企业管理员账号";
 			}
 			user.setId(Util.getUUID(6));
 			user.setAddTime(Util.dateToStr(new Date()));
 			user.setLoginTimes(0);
 			userService.save(user);
+			saveUserLog(logDesc+":"+user.getAccount());
 			JsonUtil.jsonString(response, "success");
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -144,6 +146,7 @@ public class UserAction extends BaseAction {
 			}
 			user.setEditTime(Util.dateToStr(new Date()));
 			userService.update(user);
+			saveUserLog("修改账号信息："+user.getAccount());
 			pw.print("success");
 			pw.flush();
 			pw.close();
@@ -175,6 +178,11 @@ public class UserAction extends BaseAction {
 		try {
 			String ids = Util.dealNull(request.getParameter("ids"));
 			if(!"".equals(ids) && null!=ids){
+				String[] array = ids.split("_");
+				for (int i = 0; i < array.length; i++) {
+					TblUser u = this.userService.getById(array[i]);
+					saveUserLog("删除账号:"+u.getAccount());
+				}
 				userService.deletebyids(ids.split("_"));
 				PrintWriter pw = response.getWriter();
 				pw.print("success");
@@ -196,10 +204,10 @@ public class UserAction extends BaseAction {
 		String userId = Util.dealNull(request.getParameter("userId"));
 		String roleId = Util.dealNull(request.getParameter("roleId"));
 		try {
+			TblUser user = this.userService.getById(userId);
 			TblRole role = this.roleService.getById(roleId);
 			List<UserRole> uRoles = this.userRoleService.getResultList("o.user.id=? ", null, new Object[]{userId});
 			if (uRoles == null || uRoles.size() <= 0) {
-				TblUser user = this.userService.getById(userId);
 				UserRole userRole = new UserRole();
 				userRole.setId(Util.getUUID(6));
 				userRole.setUser(user);
@@ -217,6 +225,7 @@ public class UserAction extends BaseAction {
 					}
 				}
 			}
+			saveUserLog("设置账号："+user.getAccount()+"的角色"+role.getRoleName());
 			PrintWriter pw = response.getWriter();
 			pw.print("success");
 			pw.flush();

@@ -41,6 +41,8 @@ var tcolumn=[[
 						return '<font>APP异常</font>';
 					}else if(rec.logType==5){
 						return '<font>登录远程客户端</font>';
+					}else if(rec.logType==6){
+						return '<font>录像上传</font>';
 					}
 				}
 			},

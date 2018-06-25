@@ -121,6 +121,7 @@ public class CompanyAction extends BaseAction {
 			company.setId(Util.getUUID(6));
 			company.setAddTime(Util.dateToStr(new Date()));
 			companyService.save(company);
+			saveUserLog("添加企业："+comName);
 			pw.print("success");
 			pw.flush();
 			pw.close();
@@ -152,6 +153,7 @@ public class CompanyAction extends BaseAction {
 			}
 			company.setEditTime(Util.dateToStr(new Date()));
 			companyService.update(company);
+			saveUserLog("修改企业:"+comName);
 			pw.print("success");
 			pw.flush();
 			pw.close();
@@ -184,6 +186,11 @@ public class CompanyAction extends BaseAction {
 		try {
 			String ids = Util.dealNull(request.getParameter("ids"));
 			if(!"".equals(ids) && null!=ids){
+				String[] array = ids.split("_");
+				for (int i = 0; i < array.length; i++) {
+					Company com = this.companyService.getById(array[i]);
+					saveUserLog("删除企业："+com.getComName());
+				}
 				companyService.deletebyids(ids.split("_"));
 				PrintWriter pw = response.getWriter();
 				pw.print("success");

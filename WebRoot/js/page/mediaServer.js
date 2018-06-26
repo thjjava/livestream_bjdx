@@ -32,7 +32,14 @@ var tcolumn=[[
 			{field:'recordDownUrl',title:'录像下载地址',width:120,sortable:true,align:'center'},
 			{field:'hlsServiceUrl',title:'HLS服务地址',width:120,sortable:true,align:'center'},
 			{field:'transCodeServiceUrl',title:'转码服务地址',width:120,sortable:true,align:'center'},
-			{field:'devNum',title:'设备在线数',width:120,sortable:true,align:'center'},
+			{field:'devNum',title:'设备在线数',width:120,sortable:true,align:'center',
+				formatter:function(val,rec){
+					if(rec.devNum>=150){
+						return "<font color='red'>"+rec.devNum+"</font>";
+					}else{
+						return rec.devNum;
+					}
+				}},
 			{field:'onLine',title:'状态',width:120,sortable:true,align:'center',
 				formatter:function(val,rec){
 					if(rec.onLine ==1){

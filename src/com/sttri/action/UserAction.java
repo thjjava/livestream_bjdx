@@ -104,15 +104,15 @@ public class UserAction extends BaseAction {
 				JsonUtil.jsonString(response, result);
 				return ;
 			}
+			String pwd = user.getPwd();
+			if (!Util.isNormalPwd(pwd)) {
+				JsonUtil.jsonString(response, "pwdFalse");
+				return ;
+			}
 			if(user.getAccountType()==0){
 				list = userService.getResultList("o.company.id=? and o.accountType=0", null, user.getCompany().getId());
 				if(list!=null && list.size()>0){
 					JsonUtil.jsonString(response, "manager");
-					return ;
-				}
-				String pwd = user.getPwd();
-				if (!Util.isNormalPwd(pwd)) {
-					JsonUtil.jsonString(response, "pwdFalse");
 					return ;
 				}
 				user.setPwd(WorkUtil.pwdEncrypt(pwd));

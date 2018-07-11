@@ -104,5 +104,12 @@
 				<param name="includeProperties"/>
 			</result>
         </action>
+        
+        <!-- 敏感词管理 -->
+        <action name="sensitive_*" class="com.sttri.action.SensitiveWordAction" method="{1}">
+            <result name="success" type="json">
+				<param name="includeProperties"/>
+			</result>
+        </action>
     </package>
 </struts>

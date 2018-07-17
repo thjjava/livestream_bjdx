@@ -111,5 +111,12 @@
 				<param name="includeProperties"/>
 			</result>
         </action>
+        
+        <!-- 系统告警管理 -->
+        <action name="systemAlarm_*" class="com.sttri.action.SystemAlarmAction" method="{1}">
+            <result name="success" type="json">
+				<param name="includeProperties"/>
+			</result>
+        </action>
     </package>
 </struts>

@@ -42,6 +42,7 @@
 							  			{"menuname":"评论管理","icon":"icon-alg","url":"<%=path%>/page/devComment.jsp"},
 							  			{"menuname":"黑名单管理","icon":"icon-alg","url":"<%=path%>/page/black.jsp"},
 							  			{"menuname":"管理员日志管理","icon":"icon-alg","url":"<%=path%>/page/userLog.jsp"},
+							  			{"menuname":"系统告警管理","icon":"icon-alg","url":"<%=path%>/page/systemAlarm.jsp"},
 							  			{"menuname":"敏感词管理","icon":"icon-alg","url":"<%=path%>/page/sensitiveWord.jsp"},
 							  			{"menuname":"创建License","icon":"icon-alg","url":"<%=path%>/license.jsp"}
 									  ]

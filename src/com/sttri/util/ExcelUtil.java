@@ -78,14 +78,14 @@ public class ExcelUtil {
 			stream = new FileInputStream(new File(path));
 			Workbook wb=Workbook.getWorkbook(stream);
 			Sheet sheet=wb.getSheet(0);
-			int rows=sheet.getRows();
-			int cols=sheet.getColumns();
+			int rows=sheet.getRows();//行数
+			int cols=sheet.getColumns();//列数
 			for(int i=1;i<rows;i++) {
 				Map<Object, Object> map = new HashMap<Object, Object>();
 				for (int j = 0; j < cols; j++) {
 					Cell cell=sheet.getCell(j,i);
-					String cellj=cell.getContents().trim();
-					map.put("cell"+j, cellj);
+					String celli=cell.getContents().trim();
+					map.put("cell"+(i-1), celli);
 				}
 				list.add(map);
 			}

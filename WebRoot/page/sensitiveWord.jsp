@@ -106,5 +106,43 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- 批量导入开始 -->
+		<div id="importWindow" class="easyui-window" title="设备信息" closed="true"
+			collapsible="false" minimizable="false" maximizable="false"
+			iconCls="icon-add"
+			style="width: 500px; height: 300px; display: none;" resizable="false">
+			<div class="easyui-layout" fit="true">
+				<div region="center" border="false"
+					style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+					<table width="100%" border="0" style="font-size: 13">
+						<tr>
+							<td align="right">&nbsp;</td>
+			    			<td>
+			    				<font color="red">*请按照模板的格式导入敏感词*</font>
+			    			</td>	
+						</tr>
+						<tr>
+							<td align="right">文件：</td>
+			    			<td>
+			    				<form method="post" id="uploadForm" action="<%=path%>/sensitive_upload.do" enctype="multipart/form-data">
+			    					<input type="file" id="upload" name="upload" value="浏览">
+			    				</form>
+			    			</td>
+						</tr>
+					</table>
+				</div>
+				<div region="south" border="false"
+					style="text-align: center; height: 30px; line-height: 30px;">
+					<a id="downBtn" class="easyui-linkbutton" href="javascript:void(0)"
+						onclick="javascript:location.href='<%=path%>/excel/sensitivewords.xls'">下载模版</a>
+					<a id="subBtn" class="easyui-linkbutton" href="javascript:void(0)"
+						onclick="importExcel();">导入</a>
+					<a class="easyui-linkbutton" href="javascript:void(0)"
+						onclick="closeDiv('importWindow');">取消</a>
+				</div>
+			</div>
+		</div>
+		<!-- 批量导入结束 -->
 	</body>
 </html>

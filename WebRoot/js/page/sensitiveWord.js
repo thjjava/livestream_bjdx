@@ -35,6 +35,14 @@ var tbar=[{
 			text:'删除',
 			iconCls:'icon-remove',
 			handler:deleteobj
+		 },'-',{ 
+				id:'btnadd',
+				text:'批量导入',
+				iconCls:'icon-add',
+				handler:function(){
+//					resetForm(wform);
+					openDiv('importWindow');
+				}
 		 }];
 		 
 /**
@@ -159,4 +167,38 @@ function deleteobj(){
     });
 }
 
+
+
+/**
+ * 将excel数据导入到数据库中
+ */
+function importExcel(){
+	var file=$("#upload").val();
+	if(file==''){
+		alert("请选择上传的文件!");
+		return;
+	}
+	var url=path+'/sensitive_upload.do';
+	$('#uploadForm').form('submit', {
+	    url:url,
+	    onSubmit: function(){
+	    },   
+		success:function(data){
+	    	if(data!=''){
+	    		var d = eval('('+data+')');
+	    		if(d!=null){
+	    			if(d.key=='success'){
+	    				$.messager.alert('提示',"导入成功!");
+	    				closeDiv('importWindow');
+	    				init();
+	    			}else if(d.key=='pictype'){
+	    				$.messager.alert('提示',"文件格式不支持,请导入xls格式文件!");
+	    			}else{
+	    				$.messager.alert('提示',"导入失败!");
+	    			}
+	    		}
+	    	}
+	    }
+	})
+}
 

@@ -141,6 +141,7 @@ public class DevAction extends BaseAction {
 //				dev.setDevKey(WorkUtil.pwdEncrypt(dev.getDevKey()));
 				dev.setFullFlag(0);
 				dev.setLoginTimes(0);
+				dev.setErrorLoginTimes(0);
 				devService.save(dev);
 				rt = "success";
 				saveUserLog("新增直播账号："+dev.getDevNo());
@@ -296,6 +297,7 @@ public class DevAction extends BaseAction {
 				tblDev.setDevName(devNo);
 //				tblDev.setDevKey(WorkUtil.pwdEncrypt("123456"));
 				tblDev.setLoginTimes(0);
+				tblDev.setErrorLoginTimes(0);
 				tblDev.setCompany(company);
 				tblDev.setFullFlag(0);
 				this.devService.save(tblDev);
